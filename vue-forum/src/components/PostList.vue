@@ -1,6 +1,8 @@
 <script>
 import sourceData from "@/data.json";
-
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime'
+dayjs.extend(relativeTime)
 export default {
   data() {
     return {
@@ -16,6 +18,9 @@ export default {
   methods:{
     userById(userId){
       return this.users.find(u =>u.id === userId)
+    },
+    diffForHumans(timestamp){
+      return dayjs.unix(timestamp).fromNow();
     }
   },
 }
@@ -55,7 +60,7 @@ export default {
 
 
       <div class="post-date text-faded">
-        {{post.publishedAt}}
+        {{diffForHumans(post.publishedAt)}}
       </div>
 
 
