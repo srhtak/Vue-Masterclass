@@ -1,9 +1,15 @@
 <script>
 import sourceData from "@/data.json";
+import AppDate from "@/components/AppDate";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime'
+import localizedDate from 'dayjs/plugin/localizedFormat'
 dayjs.extend(relativeTime)
+dayjs.extend(localizedDate)
 export default {
+  components:{
+    AppDate,
+  },
   data() {
     return {
       users: sourceData.users,
@@ -21,6 +27,9 @@ export default {
     },
     diffForHumans(timestamp){
       return dayjs.unix(timestamp).fromNow();
+    },
+    humanFriendlyDate(timestamp){
+      return dayjs.unix(timestamp).format('llll')
     }
   },
 }
@@ -59,9 +68,8 @@ export default {
 
 
 
-      <div class="post-date text-faded">
-        {{diffForHumans(post.publishedAt)}}
-      </div>
+      <app-date :timestamp="post.publishedAt"/>
+
 
 
     </div>
